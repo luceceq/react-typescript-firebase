@@ -1,0 +1,54 @@
+
+.App{
+  width: 1200px;
+  margin: 0 auto;
+}
+.user-table{
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.user-table td{
+  vertical-align: middle!important;
+  text-align: right;
+  padding-right: 10px!important;
+}
+
+.user-table th{
+  height: 50px;
+  vertical-align: middle!important;
+  text-align: center;
+  padding-left: 5px!important;
+  padding-right: 5px!important;
+  position: relative;
+  cursor: pointer;
+}
+
+.table-label{
+  text-align: center;
+}
+
+.button-div{
+  position: absolute;
+  width: 1000px;
+  top: 500px;
+  margin: 0 auto;
+}
+
+.btn{
+  width: 100px;
+}
+.btn:focus, .btn:active{
+  outline: none!important;
+}
+
+.previous-btn{
+  float: left;
+  margin-left: 39%;
+}
+
+.next-btn{
+  float: right;
+  margin-right: 39%;
+}
