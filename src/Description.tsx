@@ -14,6 +14,7 @@ class Description extends React.Component<IProps, IState> {
     countBy: 1,
   };
 
+  // set default state
   public state: IState = {
     count: 0,
   };
