@@ -19,6 +19,7 @@ class Description extends React.Component<IProps, IState> {
     count: 0,
   };
 
+  // increase function
   public increase = () => {
     const countBy: number = this.props.countBy!;
     const count = this.state.count + countBy;
