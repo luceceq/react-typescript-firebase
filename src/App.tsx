@@ -1,36 +1,34 @@
-import * as React from 'react'
-import { Table, Button } from 'react-bootstrap'
-import * as UserAPI from './firebase/db'
-import './App.css'
+import * as React from 'react';
+import {Table, Button} from 'react-bootstrap';
+import * as UserAPI from './firebase/db';
+import './App.css';
 
-interface InterfaceState{
-  userData: any[],
-  length: number,
-  currentStep: number,
-  endStep: number,
-  firstUserData: any,
-  lastUserData: any,
-  lastSortingKey:string,
-  sortingType:boolean,
+interface InterfaceState {
+  userData: any[];
+  length: number;
+  currentStep: number;
+  endStep: number;
+  firstUserData: any;
+  lastUserData: any;
+  lastSortingKey: string;
+  sortingType: boolean;
 }
 
-interface InterfaceProps{
+interface InterfaceProps {}
 
+interface IRequest {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phoneNumber?: string;
+  residenceCountry?: string;
+  residenceCity?: string;
+  lastActivity?: string;
+  sortingKey?: string;
+  sortingType?: boolean;
 }
 
-interface IRequest{
-  firstName?: string,
-  lastName?: string,
-  email?: string,
-  phoneNumber?: string,
-  residenceCountry?: string,
-  residenceCity?: string,
-  lastActivity?:string,  
-  sortingKey?:string,
-  sortingType?:boolean
-}
-
-class App extends React.Component<InterfaceProps,InterfaceState> {
+class App extends React.Component<InterfaceProps, InterfaceState> {
   constructor(props: InterfaceProps) {
     super(props);
     this.state = {
@@ -39,9 +37,9 @@ class App extends React.Component<InterfaceProps,InterfaceState> {
       currentStep: 1,
       endStep: 0,
       firstUserData: {},
-      lastUserData: {}, 
-      lastSortingKey:"email",
-      sortingType:true,
+      lastUserData: {},
+      lastSortingKey: 'email',
+      sortingType: true,
     };
     this.getFirstPageData = this.getFirstPageData.bind(this);
     this.getNextPageData = this.getNextPageData.bind(this);
@@ -57,6 +55,7 @@ class App extends React.Component<InterfaceProps,InterfaceState> {
     this.getLengthOfUser();
   }
 
+  // get length of user function
   public getLengthOfUser() {
     let request: IRequest = {};
     UserAPI.getLengthOfUser(request, response => {
@@ -69,8 +68,8 @@ class App extends React.Component<InterfaceProps,InterfaceState> {
 
   public getFirstPageData() {
     let request: IRequest = {};
-    request.sortingKey = this.state.lastSortingKey
-    request.sortingType = this.state.sortingType
+    request.sortingKey = this.state.lastSortingKey;
+    request.sortingType = this.state.sortingType;
     UserAPI.getFirstPageData(request, response => {
       this.setState({
         userData: response,
@@ -80,12 +79,11 @@ class App extends React.Component<InterfaceProps,InterfaceState> {
     });
   }
 
-  
   public getNextPageData() {
-    let request: IRequest = {}; 
+    let request: IRequest = {};
     request.email = this.state.lastUserData.email;
-    request.sortingKey = this.state.lastSortingKey
-    request.sortingType = this.state.sortingType
+    request.sortingKey = this.state.lastSortingKey;
+    request.sortingType = this.state.sortingType;
     UserAPI.getNextPageData(request, response => {
       this.setState({
         userData: response.slice(1, 6),
@@ -99,7 +97,7 @@ class App extends React.Component<InterfaceProps,InterfaceState> {
   public getPreviousPageData() {
     var request: any = {};
     request.email = this.state.firstUserData.email;
-    request.sortingKey = this.state.lastSortingKey
+    request.sortingKey = this.state.lastSortingKey;
     UserAPI.getPreviousPageData(request, response => {
       this.setState({
         userData: response.slice(0, 5),
@@ -110,16 +108,17 @@ class App extends React.Component<InterfaceProps,InterfaceState> {
     });
   }
 
-
   public sorting(sortingKey: string) {
-    let sortingType:boolean = this.state.sortingType
-    sortingType = !this.state.sortingType
-    this.setState({
-      lastSortingKey: sortingKey,
-      sortingType: sortingType
-    }, () => this.getFirstPageData())
-  } 
-
+    let sortingType: boolean = this.state.sortingType;
+    sortingType = !this.state.sortingType;
+    this.setState(
+      {
+        lastSortingKey: sortingKey,
+        sortingType: sortingType,
+      },
+      () => this.getFirstPageData()
+    );
+  }
 
   public render() {
     // console.log("this.state---", this.state)
@@ -130,13 +129,57 @@ class App extends React.Component<InterfaceProps,InterfaceState> {
           <thead>
             <tr>
               <th>#</th>
-              <th onClick={(event: any, sortingKey:string = "firstName"      ) => this.sorting(sortingKey)}>First Name</th>
-              <th onClick={(event: any, sortingKey:string = "account/surname") => this.sorting(sortingKey)}>Last Name</th>
-              <th onClick={(event: any, sortingKey:string = "email"          ) => this.sorting(sortingKey)}>Email</th>
-              <th onClick={(event: any, sortingKey:string = "account/dob"    ) => this.sorting(sortingKey)}>Phone No</th>
-              <th onClick={(event: any, sortingKey:string = "account/residenceCountry") => this.sorting(sortingKey)}>Residence Country</th>
-              <th onClick={(event: any, sortingKey:string = "account/residenceCity"   ) => this.sorting(sortingKey)}>Residence City</th>
-              <th onClick={(event: any, sortingKey:string = "lastActive"              ) => this.sorting(sortingKey)}>Last Active</th>
+              <th
+                onClick={(event: any, sortingKey: string = 'firstName') =>
+                  this.sorting(sortingKey)
+                }
+              >
+                First Name
+              </th>
+              <th
+                onClick={(event: any, sortingKey: string = 'account/surname') =>
+                  this.sorting(sortingKey)
+                }
+              >
+                Last Name
+              </th>
+              <th
+                onClick={(event: any, sortingKey: string = 'email') =>
+                  this.sorting(sortingKey)
+                }
+              >
+                Email
+              </th>
+              <th
+                onClick={(event: any, sortingKey: string = 'account/dob') =>
+                  this.sorting(sortingKey)
+                }
+              >
+                Phone No
+              </th>
+              <th
+                onClick={(
+                  event: any,
+                  sortingKey: string = 'account/residenceCountry'
+                ) => this.sorting(sortingKey)}
+              >
+                Residence Country
+              </th>
+              <th
+                onClick={(
+                  event: any,
+                  sortingKey: string = 'account/residenceCity'
+                ) => this.sorting(sortingKey)}
+              >
+                Residence City
+              </th>
+              <th
+                onClick={(event: any, sortingKey: string = 'lastActive') =>
+                  this.sorting(sortingKey)
+                }
+              >
+                Last Active
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -177,4 +220,4 @@ class App extends React.Component<InterfaceProps,InterfaceState> {
   }
 }
 
-export default App
+export default App;
