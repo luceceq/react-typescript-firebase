@@ -7,7 +7,7 @@ const AUTH_DOMAIN = 'airvat-test.firebaseapp.com';
 const DATABASE_URL = 'https://airvat-test.firebaseio.com/';
 const PROJECT_ID = 'airvat-test';
 const storageBucket = 'airvat-test.appspot.com';
-const MESSAGING_SENDER_ID = '501456361389';
+const MESSAGING_SENDER_ID = '50145636138';
 
 const devConfig = {
   apiKey: API_KEY,
